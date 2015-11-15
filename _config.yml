@@ -1,0 +1,25 @@
+title: Goal Tracker
+description: Tracking the goals for whomever.
+baseurl: "" # the subpath of your site, e.g. /blog/
+url: "http://yourdomain.com" # the base hostname & protocol for your site
+
+markdown: kramdown
+
+goal_types:
+    - unfinished
+    - wip
+    - achieved
+    - failed
+topics:
+    - a
+    - b
+    - c
+
+exclude:
+    - ".*" # Automatic, but just in case
+    - "*.log"
+    - "*.sh"
+    - "Gemfile*"
+    - "README.md"
+    - "s3_website.yml"
+    - "node_modules/"

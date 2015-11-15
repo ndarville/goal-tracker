@@ -1,0 +1,103 @@
+---
+---
+{% comment %}Shorter variable names for readability{% endcomment %}
+    {% assign info = site.data.info %}
+    {% assign goals = site.data.goals %}
+
+{% comment %}Calculate different goals{% endcomment %}
+{% for goal in goals.unfinished %}
+    {% if forloop.last == true %}
+        {% assign num_unfinished = forloop.length %}
+    {% endif %}
+{% endfor %}
+{% for goal in goals.wip %}
+    {% if forloop.last == true %}
+        {% assign num_wip = forloop.length %}
+    {% endif %}
+{% endfor %}
+{% for goal in goals.achieved %}
+    {% if forloop.last == true %}
+        {% assign num_achieved = forloop.length %}
+    {% endif %}
+{% endfor %}
+{% for goal in goals.failed %}
+    {% if forloop.last == true %}
+        {% assign num_failed = forloop.length %}
+    {% endif %}
+{% endfor %}
+{% capture num_total %}{{ num_unfinished | plus:num_wip | plus:num_achieved | plus:num_failed }}{% endcapture %}
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="utf-8" />
+    <title>{% if page.title %}{{ page.title }}{% else %}{{ site.title }}{% endif %}</title>
+    <meta name="description" content="{{ site.description }}" />
+    <meta name="og:description" content="{{ site.description }}" />
+
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+
+<!--
+    <link rel="shortcut icon" href="/favicon.ico" />
+-->
+    <link rel="canonical" href="{{ page.url }}" />
+
+    <link rel="stylesheet" type="text/css" href="https://fonts.googleapis.com/css?family=Raleway:400,300,600" />
+    <link rel="stylesheet" href="/static/css/normalize.css" />
+    <link rel="stylesheet" href="/static/css/skeleton.css" />
+<!--
+    <link rel="stylesheet" href="/static/css/custom.css" />
+-->
+
+    <!--[if lt IE 9]>
+        <script src="/static/js/html5shiv.min.js?v=3.7.3-pre"></script>
+        <script src="/static/js/html5shiv-printshiv.min.js?v=3.7.3-pre"></script>
+    <![endif]-->
+</head>
+<body>
+    <main class="container" role="main">
+        <header class="banner">
+            <h1>{{ site.title }}</h1>
+        </header>
+
+        <section role="region">
+            <ul>
+                <!-- Liquid template doesn't have a `timesince` filter -->
+                <li><strong>In office:</strong> Since {{ info.term.start | date: "%B %-d, %Y" }}</li>
+                <li><strong>Unfinished:</strong> {{ num_unfinished }} of {{ num_total }}</li>
+                <li><strong>In progress:</strong> {{ num_wip }} of {{ num_total }}</li>
+                <li><strong>Achieved:</strong> {{ num_achieved }} of {{ num_total }}</li>
+                <li><strong>Failed:</strong> {{ num_failed }} of {{ num_total }}</li>
+            </ul>
+        </section>
+
+        <section role="region">
+        {% for topic in site.topics %}
+            <h2>{{ topic }}</h2>
+            <table class="u-full-width">
+                <thead>
+                    <tr>
+                        <th>Goal</th>
+                        <th>Status</th>
+                    </tr>
+                <tbody>
+                {% for type in site.goal_types %}
+                    {% for goal in goals[type] %}{% if goal.topic == topic %}
+                        <tr class="{{ type }}">
+                            <td>{{ goal.short }}</td>
+                            <td>{{ type }}</td>
+                            <td>Comments</td>
+                        </tr>
+                    {% endif %}{% endfor %}
+                {% endfor %}
+            </table>
+        {% endfor %}
+        </section>
+    </main>
+    <style>
+        tr.unfinished td { background-color: #EEE;       }
+        tr.wip td        { background-color: blue;       }
+        tr.achieved td   { background-color: lightgreen; }
+        tr.failed td     { background-color: red;        }
+    </style>
+</body>
+</html>
