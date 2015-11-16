@@ -1,15 +1,11 @@
-- short: foo
+- short: Mandatory MP declaration of income sources
   long: bar
-  topic: c
+  topic: Government
 
-- short: foo
+- short: Fixed election terms
   long: bar
-  topic: c
+  topic: Government
 
-- short: foo
+- short: 60% election turnout
   long: bar
-  topic: c
-
-- short: foo
-  long: bar
-  topic: c
+  topic: Government

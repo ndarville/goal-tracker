@@ -1,23 +1,11 @@
-- short: foo
+- short: Retrofit trucks with particle filters
   long: bar
-  topic: a
+  topic: Environment
 
-- short: foo
+- short: Chart groundwater pollution
   long: bar
-  topic: b
+  topic: Environment
 
-- short: foo
+- short: Freedom to criticize government and politicians
   long: bar
-  topic: b
-
-- short: foo
-  long: bar
-  topic: b
-
-- short: foo
-  long: bar
-  topic: a
-
-- short: foo
-  long: bar
-  topic: b
+  topic: Civil Liberties

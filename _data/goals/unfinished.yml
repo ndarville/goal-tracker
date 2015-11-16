@@ -1,23 +1,23 @@
-- short: foo
+- short: Lower pollution levels
   long: bar
-  topic: a
+  topic: Environment
 
-- short: foo
+- short: Automatic voter registration
   long: bar
-  topic: c
+  topic: Government
 
-- short: foo
+- short: Make it legal to wear sandals with socks
   long: bar
-  topic: b
+  topic: Civil Liberties
 
-- short: foo
+- short: Ban Bisphenol A
   long: bar
-  topic: a
+  topic: Environment
 
-- short: foo
+- short: Legalize same-sex marriage
   long: bar
-  topic: b
+  topic: Civil Liberties
 
-- short: foo
+- short: Fluoridate water (0.7 g/L)
   long: bar
-  topic: a
+  topic: Environment

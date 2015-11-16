@@ -11,9 +11,9 @@ goal_types:
     - achieved
     - failed
 topics:
-    - a
-    - b
-    - c
+    - Civil Liberties
+    - Environment
+    - Government
 
 exclude:
     - ".*" # Automatic, but just in case
