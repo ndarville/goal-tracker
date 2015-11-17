@@ -64,16 +64,18 @@
             <h1>{{ site.title }}</h1>
         </header>
 
-        <section role="region">
-            <ul id="goal-overview" class="u-full-width">
-                <!-- Liquid template doesn't have a `timesince` filter -->
-                <li class="tenure"><a href="#"><em>Since {{ info.tenure.start | date: "%B %-d, %Y" }}</em> In office</a></li>
-                <li class="unfinished"><a href="#" title="Unfinished goals make up {{ ratio_unfinished }}%"><em>{{ num_unfinished }} of {{ num_total }}</em> Unfinished</a><span style="width:{{ ratio_unfinished }}%">{{ ratio_unfinished }}%</span></li>
-                <li class="wip"><a href="#" title="Goals in progress make up {{ ratio_wip }}%"><em>{{ num_wip }} of {{ num_total }}</em> In progress</a><span style="width:{{ ratio_wip }}%">{{ ratio_wip }}</span></li>
-                <li class="achieved"><a href="#" title="Achieved goals make up {{ ratio_achieved }}%"><em>{{ num_achieved }} of {{ num_total }}</em> Achieved</a><span style="width:{{ ratio_achieved }}%">{{ ratio_achieved }}</span></li>
-                <li class="failed"><a href="#" title="Failed goals make up {{ ratio_failed }}%"><em>{{ num_failed }} of {{ num_total }}</em> Failed</a><span style="width:{{ ratio_failed }}%">{{ ratio_failed }}</span></li>
-            </ul>
-        </section>
+        <div class="row">
+            <section class="six columns" role="region">
+                <ul id="goal-overview" class="u-full-width">
+                    <!-- Liquid template doesn't have a `timesince` filter -->
+                    <li class="tenure"><a href="#"><em>Since {{ info.tenure.start | date: "%B %-d, %Y" }}</em> In office</a></li>
+                    <li class="unfinished"><a href="#" title="Unfinished goals make up {{ ratio_unfinished }}%"><em>{{ num_unfinished }} of {{ num_total }}</em> Unfinished</a><span style="width:{{ ratio_unfinished }}%">{{ ratio_unfinished }}%</span></li>
+                    <li class="wip"><a href="#" title="Goals in progress make up {{ ratio_wip }}%"><em>{{ num_wip }} of {{ num_total }}</em> In progress</a><span style="width:{{ ratio_wip }}%">{{ ratio_wip }}</span></li>
+                    <li class="achieved"><a href="#" title="Achieved goals make up {{ ratio_achieved }}%"><em>{{ num_achieved }} of {{ num_total }}</em> Achieved</a><span style="width:{{ ratio_achieved }}%">{{ ratio_achieved }}</span></li>
+                    <li class="failed"><a href="#" title="Failed goals make up {{ ratio_failed }}%"><em>{{ num_failed }} of {{ num_total }}</em> Failed</a><span style="width:{{ ratio_failed }}%">{{ ratio_failed }}</span></li>
+                </ul>
+            </section>
+        </div>
 
         <section role="region">
         {% for topic in site.topics %}
@@ -104,7 +106,6 @@
           * Based on the work by Dan Cederholm in his book Handcrafted CSS
          **/
 
-        ul#goal-overview              { max-width: 350px; } /**!!! Change to x-columns class */
         ul#goal-overview li           { list-style: none; }
         ul#goal-overview li a         { color: #000; }
         ul#goal-overview li a:visited { color: #000; }
