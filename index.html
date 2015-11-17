@@ -26,6 +26,11 @@
     {% endif %}
 {% endfor %}
 {% capture num_total %}{{ num_unfinished | plus:num_wip | plus:num_achieved | plus:num_failed }}{% endcapture %}
+
+{% capture ratio_unfinished %}{{ num_unfinished | times:100.0 | divided_by:num_total | round }}{% endcapture %}
+{% capture ratio_wip %}{{ num_wip | times:100.0 | divided_by:num_total | round }}{% endcapture %}
+{% capture ratio_achieved %}{{ num_achieved | times:100.0 | divided_by:num_total | round }}{% endcapture %}
+{% capture ratio_failed %}{{ num_failed | times:100.0 | divided_by:num_total | round }}{% endcapture %}
 <!DOCTYPE html>
 <html lang="en">
 <head>
@@ -60,20 +65,21 @@
         </header>
 
         <section role="region">
-            <ul>
+            <ul id="goal-overview" class="u-full-width">
                 <!-- Liquid template doesn't have a `timesince` filter -->
-                <li><strong>In office:</strong> Since {{ info.term.start | date: "%B %-d, %Y" }}</li>
-                <li><strong>Unfinished:</strong> {{ num_unfinished }} of {{ num_total }}</li>
-                <li><strong>In progress:</strong> {{ num_wip }} of {{ num_total }}</li>
-                <li><strong>Achieved:</strong> {{ num_achieved }} of {{ num_total }}</li>
-                <li><strong>Failed:</strong> {{ num_failed }} of {{ num_total }}</li>
+                <li class="tenure"><a href="#"><em>Since {{ info.tenure.start | date: "%B %-d, %Y" }}</em> In office</a></li>
+                <li class="unfinished"><a href="#"><em>{{ num_unfinished }} of {{ num_total }}</em> Unfinished</a><span style="width:{{ ratio_unfinished }}%">{{ ratio_unfinished }}%</span></li>
+                <li class="wip"><a href="#"><em>{{ num_wip }} of {{ num_total }}</em> In progress</a><span style="width:{{ ratio_wip }}%">{{ ratio_wip }}</span></li>
+                <li class="achieved"><a href="#"><em>{{ num_achieved }} of {{ num_total }}</em> Achieved</a><span style="width:{{ ratio_achieved }}%">{{ ratio_achieved }}</span></li>
+                <li class="failed"><a href="#"><em>{{ num_failed }} of {{ num_total }}</em> Failed</a><span style="width:{{ ratio_failed }}%">{{ ratio_failed }}</span></li>
             </ul>
         </section>
 
         <section role="region">
         {% for topic in site.topics %}
             <h2>{{ topic }}</h2>
-            <table class="u-full-width">
+
+            <table id="goal-table" class="u-full-width">
                 <thead>
                     <tr>
                         <th>Goal</th>
@@ -94,10 +100,80 @@
         </section>
     </main>
     <style>
-        tr.unfinished td { background-color: #EEE;    }
-        tr.wip td        { background-color: #2B83BA; }
-        tr.achieved td   { background-color: #ABDDA4; }
-        tr.failed td     { background-color: #D7191C; }
+        /**
+          * Goal Overview CSS
+          * Based on the work by Dan Cederholm in his book Handcrafted CSS
+         **/
+
+        ul#goal-overview              { max-width: 350px; } /**!!! Change to x-columns class */
+        ul#goal-overview li           { list-style: none; }
+        ul#goal-overview li a         { color: #000; }
+        ul#goal-overview li a:visited { color: #000; }
+
+        /***/
+
+        ul#goal-overview li a { height: 1%; }
+
+        ul#goal-overview li {
+            position: relative;
+            margin: 0 0 2px 0;
+        }
+            ul#goal-overview li:hover a {
+                color: rgba(0, 0, 0, .5) !important;
+            }
+
+            ul#goal-overview li a {
+                position: relative;
+                display: block;
+                padding: 7px;
+                z-index: 2;
+            }
+
+                ul#goal-overview li a:link {
+                    font-weight: bold;
+                    text-decoration: none;
+                    color: #000;
+                }
+
+            ul#goal-overview li em {
+                float: right;
+                font-style: normal;
+                font-weight: normal;
+                color: #000;
+            }
+
+            ul#goal-overview li span {
+                position: absolute;
+                top: 0;
+                left: 0;
+                display: block;
+                height: 100%;
+                line-height: 2.55em;
+                text-indent: -9999px;
+            /** background: #F3F2E8; */
+            }
+
+        /** Customization of Goal Overview and Goal Table */
+
+        #goal-table tr.unfinished td,
+        ul#goal-overview li.unfinished span {
+            background-color: #F3F2E8;
+        }
+
+        #goal-table tr.wip td,
+        ul#goal-overview li.wip span {
+            background-color: #2B83BA;
+        }
+
+        #goal-table tr.achieved td,
+        ul#goal-overview li.achieved span {
+            background-color: #ABDDA4;
+        }
+
+        #goal-table tr.failed td,
+        ul#goal-overview li.failed span {
+            background-color: #D7191C;
+        }
     </style>
 </body>
 </html>

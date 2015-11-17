@@ -1,2 +1,6 @@
+tenure: # Can extend beyond term.start
+    start: 26 May 2014
+    end: ""
 term:
     start: 26 May 2014
+    end: ""
