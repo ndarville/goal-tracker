@@ -87,15 +87,17 @@
                         <th>Goal</th>
                         <th>Status</th>
                     </tr>
+                </thead>
                 <tbody>
-                {% for type in site.goal_types %}
-                    {% for goal in goals[type] %}{% if goal.topic == topic %}
-                        <tr class="{{ type }}">
-                            <td>{{ goal.short }}</td>
-                            <td>{{ type }}</td>
-                        </tr>
-                    {% endif %}{% endfor %}
-                {% endfor %}
+            {% for type in site.goal_types %}
+                {% for goal in goals[type] %}{% if goal.topic == topic %}
+                    <tr class="{{ type }}">
+                        <td>{{ goal.short }}</td>
+                        <td>{{ type }}</td>
+                    </tr>
+                {% endif %}{% endfor %}
+            {% endfor %}
+                </tbody>
             </table>
         {% endfor %}
         </section>
