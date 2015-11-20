@@ -46,8 +46,12 @@
 -->
     <link rel="canonical" href="{{ page.url }}" />
 
+{% if site.minify == true %}
+    <link rel="stylesheet" type="text/css" href="{{ site.baseurl }}static/css/normalize+skeleton.min.css" media="all" />
+{% else %}
     <link rel="stylesheet" type="text/css" href="{{ site.baseurl }}static/css/normalize.css" media="all" />
     <link rel="stylesheet" type="text/css" href="{{ site.baseurl }}static/css/skeleton.css" media="all" />
+{% endif %}
 <!--
     <link rel="stylesheet" href="{{ site.baseurl }}static/css/custom.css" />
 -->
