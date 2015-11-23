@@ -39,3 +39,5 @@
          url("../fonts/Raleway-600/Raleway-600.ttf") format("truetype"),
          url("../fonts/Raleway-600/Raleway-600.svg#Raleway") format("svg");
 }
+
+.fonts-loaded body { font-family: "Raleway", "HelveticaNeue", "Helvetica Neue", Helvetica, Arial, sans-serif; }

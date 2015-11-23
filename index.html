@@ -186,5 +186,14 @@
             background-color: rgba(215, 25, 28, .75);
         }
     </style>
+
+    <script type="text/javascript" src="{{ site.baseurl }}static/js/fontfaceobserver.js"></script>
+    <script type="text/javascript">
+        new FontFaceObserver("Raleway")
+            .check()
+            .then( function() {
+                document.documentElement.className += "fonts-loaded";
+            });
+    </script>
 </body>
 </html>
