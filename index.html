@@ -189,9 +189,15 @@
 
     <script type="text/javascript" src="{{ site.baseurl }}static/js/fontfaceobserver.js"></script>
     <script type="text/javascript">
-        new FontFaceObserver("Raleway")
-            .check()
-            .then( function() {
+        var raleway300 = new FontFaceObserver("Raleway", {"weight": 300}),
+            raleway400 = new FontFaceObserver("Raleway", {"weight": 400}),
+            raleway600 = new FontFaceObserver("Raleway", {"weight": 300});
+
+        Promise.all([
+            raleway300.check(),
+            raleway400.check(),
+            raleway600.check()
+        ]).then(function() {
                 document.documentElement.className += "fonts-loaded";
             });
     </script>
