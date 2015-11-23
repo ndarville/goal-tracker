@@ -55,7 +55,8 @@
 <!--
     <link rel="stylesheet" href="{{ site.baseurl }}static/css/custom.css" />
 -->
-    <link rel="stylesheet" type="text/css" href="{{ site.baseurl }}static/typefaces/css/fonts.css" media="all" />
+    <link rel="stylesheet" type="text/css" href="{{ site.baseurl }}static/typefaces/css/fonts.css" media="deferred" onload="if(media!='all')media='all'" />
+    <noscript><link rel="stylesheet" type="text/css" href="{{ site.baseurl }}static/typefaces/css/fonts.css" media="all" /></noscript>
 
     <!--[if lt IE 9]>
         <script type="text/javascript" src="{{ site.baseurl }}static/js/html5shiv.min.js?v=3.7.3-pre"></script>
