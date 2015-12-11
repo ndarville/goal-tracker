@@ -71,7 +71,7 @@
 
         <div class="row">
             <section class="six columns" role="region">
-                <ul id="goal-overview" class="u-full-width">
+                <ul id="goal-overview" class="u-max-full-width">
                     <!-- Liquid template doesn't have a `timesince` filter -->
                     <li class="tenure"><a href="#"><em>Since {{ info.tenure.start | date: "%B %-d, %Y" }}</em> In office</a></li>
                     <li class="unfinished"><a href="#" title="Unfinished goals make up {{ ratio_unfinished }}%"><em>{{ num_unfinished }} of {{ num_total }}</em> Unfinished</a><span style="width:{{ ratio_unfinished }}%">{{ ratio_unfinished }}%</span></li>
