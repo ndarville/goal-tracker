@@ -75,11 +75,11 @@
             <section class="six columns" role="region">
                 <ul id="goal-overview" class="u-max-full-width">
                     <!-- Liquid template doesn't have a `timesince` filter -->
-                    <li class="tenure"><a href="#"><em>Since {{ info.tenure.start | date: "%B %-d, %Y" }}</em> In office</a></li>
-                    <li class="unfinished"><a href="#" title="Unfinished goals make up {{ ratio_unfinished }}%"><em>{{ num_unfinished }} of {{ num_total }}</em> Unfinished</a><span style="width:{{ ratio_unfinished }}%">{{ ratio_unfinished }}%</span></li>
-                    <li class="wip"><a href="#" title="Goals in progress make up {{ ratio_wip }}%"><em>{{ num_wip }} of {{ num_total }}</em> In progress</a><span style="width:{{ ratio_wip }}%">{{ ratio_wip }}</span></li>
-                    <li class="achieved"><a href="#" title="Achieved goals make up {{ ratio_achieved }}%"><em>{{ num_achieved }} of {{ num_total }}</em> Achieved</a><span style="width:{{ ratio_achieved }}%">{{ ratio_achieved }}</span></li>
-                    <li class="failed"><a href="#" title="Failed goals make up {{ ratio_failed }}%"><em>{{ num_failed }} of {{ num_total }}</em> Failed</a><span style="width:{{ ratio_failed }}%">{{ ratio_failed }}</span></li>
+                    <li class="tenure"><a><em>Since {{ info.tenure.start | date: "%B %-d, %Y" }}</em> In office</a></li>
+                    <li class="unfinished"><a title="Unfinished goals make up {{ ratio_unfinished }}%"><em>{{ num_unfinished }} of {{ num_total }}</em> Unfinished</a><span style="width:{{ ratio_unfinished }}%">{{ ratio_unfinished }}%</span></li>
+                    <li class="wip"><a title="Goals in progress make up {{ ratio_wip }}%"><em>{{ num_wip }} of {{ num_total }}</em> In progress</a><span style="width:{{ ratio_wip }}%">{{ ratio_wip }}</span></li>
+                    <li class="achieved"><a title="Achieved goals make up {{ ratio_achieved }}%"><em>{{ num_achieved }} of {{ num_total }}</em> Achieved</a><span style="width:{{ ratio_achieved }}%">{{ ratio_achieved }}</span></li>
+                    <li class="failed"><a title="Failed goals make up {{ ratio_failed }}%"><em>{{ num_failed }} of {{ num_total }}</em> Failed</a><span style="width:{{ ratio_failed }}%">{{ ratio_failed }}</span></li>
                 </ul>
             </section>
         </div>
