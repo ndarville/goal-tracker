@@ -4,7 +4,7 @@
     {% assign info = site.data.info %}
     {% assign goals = site.data.goals %}
 
-{% comment %}Calculate different goals{% endcomment %}
+{% comment %}Count different goals{% endcomment %}
 {% for goal in goals.unfinished %}
     {% if forloop.last == true %}
         {% assign num_unfinished = forloop.length %}
