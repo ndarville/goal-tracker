@@ -260,6 +260,7 @@ First we look at the so-called Goal Overview:
     <li class="achieved"><a title="Achieved goals make up {{ ratio_achieved }}%"><em>{{ num_achieved }} of {{ num_total }}</em> Achieved</a><span style="width:{{ ratio_achieved }}%">{{ ratio_achieved }}</span></li>
     <li class="failed"><a title="Failed goals make up {{ ratio_failed }}%"><em>{{ num_failed }} of {{ num_total }}</em> Failed</a><span style="width:{{ ratio_failed }}%">{{ ratio_failed }}</span></li>
 </ul>
+```
 
 If you look at the screenshot, you can see that we start with a display for the time in office, so let’s poke through that first:
 
