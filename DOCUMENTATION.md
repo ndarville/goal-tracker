@@ -241,7 +241,7 @@ In Liquid, we write the equivalent of
 
     share = num * 100.0 / total
 
-We have to multiply by 100.0 first, because we run into some Liquid wonkiness if we do it the other way around. Also, the round filter doesn’t work, because Jekyll hasn’t been updated with the version of Liquid that supports it. As of right now, you also get a bunch of decimals on the result value, which isn’t the intention.
+We have to multiply by 100.0 first, because we run into some Liquid wonkiness if we do it the other way around. Also, the round filter doesn’t work for versions of Jekyll `< 3` without the version of Liquid that supports it. This includes GitHub Pages. As of right now, you also get a bunch of decimals on the result value, which isn’t the intention.
 
 This concludes the `<head>` section!
 
