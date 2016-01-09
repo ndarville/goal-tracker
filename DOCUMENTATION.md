@@ -253,8 +253,19 @@ First we look at the so-called Goal Overview:
 
 ```liquid
 <ul id="goal-overview" class="u-max-full-width">
-    <!-- Liquid template doesn't have a `timesince` filter -->
-    <li class="tenure"><a><em>Since {{ info.tenure.start | date: "%B %-d, %Y" }}</em> In office</a></li>
+    {% capture now %}{{ site.time | date:"%s" }}{% endcapture %}
+    {% capture tenure_start %}{{ info.tenure.start | date:"%s" }}{% endcapture %}
+    {% capture tenure_end %}{{ info.tenure.end | date:"%s" }}{% endcapture %}
+{% if tenure_start > now %}
+    {% assign tenure_served = 0 %}
+    {% assign ratio_tenure = 0 %}
+{% else %}
+    {% assign time_divisor = 86400 %}
+    {% capture tenure_served %}{{ now | minus:tenure_start | divided_by:time_divisor }}{% endcapture %}
+    {% capture tenure_ending %}{{ tenure_end | minus:tenure_start | divided_by:time_divisor }}{% endcapture %}
+    {% capture ratio_tenure %}{{ tenure_served | times:100.0 | divided_by:tenure_ending | round }}{% endcapture %}
+{% endif %}
+    <li class="tenure"><a title="{{ ratio_tenure }}% of tenure has been served"><em>{{ tenure_served }} of {{ tenure_ending }} days</em> Tenure</a><span style="width:{{ ratio_tenure }}%">{{ ratio_tenure }}%</span></li>
     <li class="unfinished"><a title="Unfinished goals make up {{ ratio_unfinished }}%"><em>{{ num_unfinished }} of {{ num_total }}</em> Unfinished</a><span style="width:{{ ratio_unfinished }}%">{{ ratio_unfinished }}%</span></li>
     <li class="wip"><a title="Goals in progress make up {{ ratio_wip }}%"><em>{{ num_wip }} of {{ num_total }}</em> In progress</a><span style="width:{{ ratio_wip }}%">{{ ratio_wip }}</span></li>
     <li class="achieved"><a title="Achieved goals make up {{ ratio_achieved }}%"><em>{{ num_achieved }} of {{ num_total }}</em> Achieved</a><span style="width:{{ ratio_achieved }}%">{{ ratio_achieved }}</span></li>
@@ -265,19 +276,28 @@ First we look at the so-called Goal Overview:
 If you look at the screenshot, you can see that we start with a display for the time in office, so let’s poke through that first:
 
 ```liquid
-<!-- Liquid template doesn't have a `timesince` filter -->
-<li class="tenure"><a><em>Since {{ info.tenure.start | date: "%B %-d, %Y" }}</em> In office</a></li>
+    {% capture now %}{{ site.time | date:"%s" }}{% endcapture %}
+    {% capture tenure_start %}{{ info.tenure.start | date:"%s" }}{% endcapture %}
+    {% capture tenure_end %}{{ info.tenure.end | date:"%s" }}{% endcapture %}
+{% if tenure_start > now %}
+    {% assign tenure_served = 0 %}
+    {% assign ratio_tenure = 0 %}
+{% else %}
+    {% assign time_divisor = 86400 %}
+    {% capture tenure_served %}{{ now | minus:tenure_start | divided_by:time_divisor }}{% endcapture %}
+    {% capture tenure_ending %}{{ tenure_end | minus:tenure_start | divided_by:time_divisor }}{% endcapture %}
+    {% capture ratio_tenure %}{{ tenure_served | times:100.0 | divided_by:tenure_ending | round }}{% endcapture %}
+{% endif %}
+    <li class="tenure"><a title="{{ ratio_tenure }}% of the tenure ending {{ info.tenure.end }} has been served"><em>{{ tenure_served }} of {{ tenure_ending }} days</em> Tenure</a><span style="width:{{ ratio_tenure }}%">{{ ratio_tenure }}%</span></li>
 ```
 
-Because Jekyll is a static site generator, you can not update the display of time automatically. This leaves us with an absolute display of the time **In Office**, which would otherwise have had a bar until the end of the term or the next election.
+I’ll be brief on this section for now, as it’s still in a very early state.
 
-Instead, we just display the value `{{ info.tenure.start }}` (from `{{ site.data.info }}`, as you may remember) like so:
+Because Jekyll is a static site generator, you can not update the display of time automatically. As a result of this, you can only update relative times and dates, whenever a new version of the site is built and pushed to the server. This means that the tenure tracking depends on being the site regularly being updated. I think this mechanism serves the purpose of shaming a maintainer to keep the site updated, lest they want their tenure tracker to be completely out of date in public.
 
-```liquid
-<em>Since {{ info.tenure.start | date: "%B %-d, %Y" }}</em>
-```
+The tenure tracker depends on two dates, the date of the tenure start and the end of the tenure. This info is entered in `_data/info.yml`. For now, I am going with `tenure` instead of `term`, especially as it allows you to track the goals and results from the very beginning someone’s first forray, rather than merely their last term, although that choice is ultimately yours.
 
-This takes the date value and formats it as a date according to the filter format defined by `date:`.
+That is it for now.
 
 The remainder of the list items refer to our four goal types:
 

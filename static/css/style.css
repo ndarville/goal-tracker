@@ -51,6 +51,12 @@ ul#goal-overview li {
     }
 
 /** Colours for Goal Overview and Goal Table */
+ul#goal-overview li.tenure span {
+    background-color: #FEE8C8;
+    background-color: rgba(254, 232, 200, .75);
+
+}
+
 .goal-table tr.unfinished td,
 ul#goal-overview li.unfinished span {
     background-color: #F3F2E8;

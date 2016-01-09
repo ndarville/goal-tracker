@@ -74,8 +74,28 @@
         <div class="row">
             <section class="six columns" role="region">
                 <ul id="goal-overview" class="u-max-full-width">
-                    <!-- Liquid template doesn't have a `timesince` filter -->
-                    <li class="tenure"><a><em>Since {{ info.tenure.start | date: "%B %-d, %Y" }}</em> In office</a></li>
+                {% comment %}Handle:
+                    * Tenure
+                        - If not tenure.start
+                        - If not tenure.end
+                        - If tenure.start > tenure.end
+                    * Dates
+                        * If tenure.start > now
+                    * Thousands separator
+                {% endcomment %}
+                    {% capture now %}{{ site.time | date:"%s" }}{% endcapture %}
+                    {% capture tenure_start %}{{ info.tenure.start | date:"%s" }}{% endcapture %}
+                    {% capture tenure_end %}{{ info.tenure.end | date:"%s" }}{% endcapture %}
+                {% if tenure_start > now %}
+                    {% assign tenure_served = 0 %}
+                    {% assign ratio_tenure = 0 %}
+                {% else %}
+                    {% assign time_divisor = 86400 %}
+                    {% capture tenure_served %}{{ now | minus:tenure_start | divided_by:time_divisor }}{% endcapture %}
+                    {% capture tenure_ending %}{{ tenure_end | minus:tenure_start | divided_by:time_divisor }}{% endcapture %}
+                    {% capture ratio_tenure %}{{ tenure_served | times:100.0 | divided_by:tenure_ending | round }}{% endcapture %}
+                {% endif %}
+                    <li class="tenure"><a title="{{ ratio_tenure }}% of the tenure ending {{ info.tenure.end }} has been served"><em>{{ tenure_served }} of {{ tenure_ending }} days</em> Tenure</a><span style="width:{{ ratio_tenure }}%">{{ ratio_tenure }}%</span></li>
                     <li class="unfinished"><a title="Unfinished goals make up {{ ratio_unfinished }}%"><em>{{ num_unfinished }} of {{ num_total }}</em> Unfinished</a><span style="width:{{ ratio_unfinished }}%">{{ ratio_unfinished }}%</span></li>
                     <li class="wip"><a title="Goals in progress make up {{ ratio_wip }}%"><em>{{ num_wip }} of {{ num_total }}</em> In progress</a><span style="width:{{ ratio_wip }}%">{{ ratio_wip }}</span></li>
                     <li class="achieved"><a title="Achieved goals make up {{ ratio_achieved }}%"><em>{{ num_achieved }} of {{ num_total }}</em> Achieved</a><span style="width:{{ ratio_achieved }}%">{{ ratio_achieved }}</span></li>
@@ -126,5 +146,6 @@
                 document.documentElement.className += "fonts-loaded";
             });
     </script>
+    <!-- Last update was {{ site.time | date: "%B %-d, %Y" }}. -->
 </body>
 </html>
