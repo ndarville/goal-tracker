@@ -265,7 +265,7 @@ First we look at the so-called Goal Overview:
     {% capture tenure_ending %}{{ tenure_end | minus:tenure_start | divided_by:time_divisor }}{% endcapture %}
     {% capture ratio_tenure %}{{ tenure_served | times:100.0 | divided_by:tenure_ending | round }}{% endcapture %}
 {% endif %}
-    <li class="tenure"><a title="{{ ratio_tenure }}% of tenure has been served"><em>{{ tenure_served }} of {{ tenure_ending }} days</em> Tenure</a><span style="width:{{ ratio_tenure }}%">{{ ratio_tenure }}%</span></li>
+    <li class="tenure"><a title="{{ ratio_tenure }}% of tenure has been served"><em>{{ tenure_served }} of {{ tenure_ending }} days</em> Days in office</a><span style="width:{{ ratio_tenure }}%">{{ ratio_tenure }}%</span></li>
     <li class="unfinished"><a title="Unfinished goals make up {{ ratio_unfinished }}%"><em>{{ num_unfinished }} of {{ num_total }}</em> Unfinished</a><span style="width:{{ ratio_unfinished }}%">{{ ratio_unfinished }}%</span></li>
     <li class="wip"><a title="Goals in progress make up {{ ratio_wip }}%"><em>{{ num_wip }} of {{ num_total }}</em> In progress</a><span style="width:{{ ratio_wip }}%">{{ ratio_wip }}</span></li>
     <li class="achieved"><a title="Achieved goals make up {{ ratio_achieved }}%"><em>{{ num_achieved }} of {{ num_total }}</em> Achieved</a><span style="width:{{ ratio_achieved }}%">{{ ratio_achieved }}</span></li>
@@ -288,7 +288,7 @@ If you look at the screenshot, you can see that we start with a display for the 
     {% capture tenure_ending %}{{ tenure_end | minus:tenure_start | divided_by:time_divisor }}{% endcapture %}
     {% capture ratio_tenure %}{{ tenure_served | times:100.0 | divided_by:tenure_ending | round }}{% endcapture %}
 {% endif %}
-    <li class="tenure"><a title="{{ ratio_tenure }}% of the tenure ending {{ info.tenure.end }} has been served"><em>{{ tenure_served }} of {{ tenure_ending }} days</em> Tenure</a><span style="width:{{ ratio_tenure }}%">{{ ratio_tenure }}%</span></li>
+    <li class="tenure"><a title="{{ ratio_tenure }}% of the tenure ending {{ info.tenure.end }} has been served"><em>{{ tenure_served }} of {{ tenure_ending }} days</em> Days in office</a><span style="width:{{ ratio_tenure }}%">{{ ratio_tenure }}%</span></li>
 ```
 
 I’ll be brief on this section for now, as it’s still in a very early state.
