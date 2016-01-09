@@ -1,7 +1,7 @@
 ---
 ---
 {% comment %}Shorter variable names for readability{% endcomment %}
-    {% assign info = site.data.info %}
+    {% assign tenure = site.data.info.tenure %}
     {% assign goals = site.data.goals %}
 
 {% comment %}Count different goals{% endcomment %}
@@ -68,28 +68,27 @@
         <div class="row">
             <section class="six columns" role="region">
                 <ul id="goal-overview" class="u-max-full-width">
-                {% comment %}Handle:
-                    * Tenure
-                        - If not tenure.start
-                        - If not tenure.end
-                        - If tenure.start > tenure.end
-                    * Dates
-                        * If tenure.start > now
-                    * Thousands separator
-                {% endcomment %}
                     {% capture now %}{{ site.time | date:"%s" }}{% endcapture %}
-                    {% capture tenure_start %}{{ info.tenure.start | date:"%s" }}{% endcapture %}
-                    {% capture tenure_end %}{{ info.tenure.end | date:"%s" }}{% endcapture %}
+            {% if tenure.start != "" and tenure.end != "" %}
+                    {% capture tenure_start %}{{ tenure.start | date:"%s" }}{% endcapture %}
+                    {% capture tenure_end %}{{ tenure.end | date:"%s" }}{% endcapture %}
+                    {% capture tenure_served %}{{ now | minus:tenure_start | divided_by:86400 }}{% endcapture %}
+                    {% capture tenure_ending %}{{ tenure_end | minus:tenure_start | divided_by:86400 }}{% endcapture %}
                 {% if tenure_start > now %}
-                    {% assign tenure_served = 0 %}
                     {% assign ratio_tenure = 0 %}
                 {% else %}
-                    {% assign time_divisor = 86400 %}
-                    {% capture tenure_served %}{{ now | minus:tenure_start | divided_by:time_divisor }}{% endcapture %}
-                    {% capture tenure_ending %}{{ tenure_end | minus:tenure_start | divided_by:time_divisor }}{% endcapture %}
                     {% capture ratio_tenure %}{{ tenure_served | times:100.0 | divided_by:tenure_ending | round }}{% endcapture %}
                 {% endif %}
-                    <li class="tenure"><a title="{{ ratio_tenure }}% of the tenure ending {{ info.tenure.end }} has been served"><em>{{ tenure_served }} of {{ tenure_ending }} days</em> Days in office</a><span style="width:{{ ratio_tenure }}%">{{ ratio_tenure }}%</span></li>
+                    <li class="tenure"><a title="{{ ratio_tenure }}% of the tenure ending {{ tenure.end }} has been served"><em>{{ tenure_served }} of {{ tenure_ending }} days</em> Days in office</a><span style="width:{{ ratio_tenure }}%">{{ ratio_tenure }}%</span></li>
+            {% else %}
+                {% if tenure.end == "" %}
+                    {% capture tenure_start %}{{ tenure.start | date:"%s" }}{% endcapture %}
+                    {% capture tenure_served %}{{ now | minus:tenure_start | divided_by:86400 }}{% endcapture %}
+                {% else %}
+                    {% assign tenure_served = "?" %}
+                {% endif %}
+                    <li class="tenure"><a><em>{{ tenure_served }} of ? days</em> Days in office</a><span style="width:0%">0%</span></li>
+            {% endif %}
                     <li class="unfinished"><a title="Unfinished goals make up {{ ratio_unfinished }}%"><em>{{ num_unfinished }} of {{ num_total }}</em> Unfinished</a><span style="width:{{ ratio_unfinished }}%">{{ ratio_unfinished }}%</span></li>
                     <li class="wip"><a title="Goals in progress make up {{ ratio_wip }}%"><em>{{ num_wip }} of {{ num_total }}</em> In progress</a><span style="width:{{ ratio_wip }}%">{{ ratio_wip }}</span></li>
                     <li class="achieved"><a title="Achieved goals make up {{ ratio_achieved }}%"><em>{{ num_achieved }} of {{ num_total }}</em> Achieved</a><span style="width:{{ ratio_achieved }}%">{{ ratio_achieved }}</span></li>

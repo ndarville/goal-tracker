@@ -82,7 +82,7 @@ As you read through this, keep in mind that this is the end result we want and g
 
 ```liquid
 {% comment %}Shorter variable names for readability{% endcomment %}
-    {% assign info = site.data.info %}
+    {% assign tenure = site.data.info.tenure %}
     {% assign goals = site.data.goals %}
 
 {% comment %}Count different goals{% endcomment %}
@@ -118,20 +118,20 @@ Let’s try to break this down piece by piece.
 
 ```liquid
 {% comment %}Shorter variable names for readability{% endcomment %}
-    {% assign info = site.data.info %}
+    {% assign tenure = site.data.info.tenure %}
     {% assign goals = site.data.goals %}
 ```
 
 This creates two shorthand variables:
 
-* `info`
+* `tenure`
 * `goals`
 
 The stuff in our `_data/` folder is loaded in Jekyll using `site.data`—and outside the `{% tags %}` as `{{ site.data }}` in Liquid markup, which is the template language of Jekyll.
 
 The `goals/` folder is accessed with `site.data.goals`; YML files like `wip.yml` are accessed with `site.data.goals.wip`. (Notice the lack of extension.) You get the concept by now.
 
-We use the `{% assign %}` tag, because we’re lazy, to create a shorthand variable for our `info/` and `goals/` folders without `site.data`. Again, this is pure laziness, but it makes future code a lot more readable.
+We use the `{% assign %}` tag, because we’re lazy, to create a shorthand variable for the `tenure` group in our `info.yml` file, and one for our `goals/` folder without `site.data`. Again, this is pure laziness, but it makes future code a lot more readable.
 
 Moving on to the next part of the snippet:
 
@@ -252,43 +252,65 @@ First we look at the so-called Goal Overview:
 ##### Goal Overview #####
 
 ```liquid
-<ul id="goal-overview" class="u-max-full-width">
-    {% capture now %}{{ site.time | date:"%s" }}{% endcapture %}
-    {% capture tenure_start %}{{ info.tenure.start | date:"%s" }}{% endcapture %}
-    {% capture tenure_end %}{{ info.tenure.end | date:"%s" }}{% endcapture %}
-{% if tenure_start > now %}
-    {% assign tenure_served = 0 %}
-    {% assign ratio_tenure = 0 %}
+<section class="six columns" role="region">
+    <ul id="goal-overview" class="u-max-full-width">
+        {% capture now %}{{ site.time | date:"%s" }}{% endcapture %}
+{% if tenure.start != "" and tenure.end != "" %}
+        {% capture tenure_start %}{{ tenure.start | date:"%s" }}{% endcapture %}
+        {% capture tenure_end %}{{ tenure.end | date:"%s" }}{% endcapture %}
+        {% capture tenure_served %}{{ now | minus:tenure_start | divided_by:86400 }}{% endcapture %}
+        {% capture tenure_ending %}{{ tenure_end | minus:tenure_start | divided_by:86400 }}{% endcapture %}
+    {% if tenure_start > now %}
+        {% assign ratio_tenure = 0 %}
+    {% else %}
+        {% capture ratio_tenure %}{{ tenure_served | times:100.0 | divided_by:tenure_ending | round }}{% endcapture %}
+    {% endif %}
+        <li class="tenure"><a title="{{ ratio_tenure }}% of the tenure ending {{ tenure.end }} has been served"><em>{{ tenure_served }} of {{ tenure_ending }} days</em> Days in office</a><span style="width:{{ ratio_tenure }}%">{{ ratio_tenure }}%</span></li>
 {% else %}
-    {% assign time_divisor = 86400 %}
-    {% capture tenure_served %}{{ now | minus:tenure_start | divided_by:time_divisor }}{% endcapture %}
-    {% capture tenure_ending %}{{ tenure_end | minus:tenure_start | divided_by:time_divisor }}{% endcapture %}
-    {% capture ratio_tenure %}{{ tenure_served | times:100.0 | divided_by:tenure_ending | round }}{% endcapture %}
+    {% if tenure.end == "" %}
+        {% capture tenure_start %}{{ tenure.start | date:"%s" }}{% endcapture %}
+        {% capture tenure_served %}{{ now | minus:tenure_start | divided_by:86400 }}{% endcapture %}
+    {% else %}
+        {% assign tenure_served = "?" %}
+    {% endif %}
+        <li class="tenure"><a><em>{{ tenure_served }} of ? days</em> Days in office</a><span style="width:0%">0%</span></li>
 {% endif %}
-    <li class="tenure"><a title="{{ ratio_tenure }}% of tenure has been served"><em>{{ tenure_served }} of {{ tenure_ending }} days</em> Days in office</a><span style="width:{{ ratio_tenure }}%">{{ ratio_tenure }}%</span></li>
-    <li class="unfinished"><a title="Unfinished goals make up {{ ratio_unfinished }}%"><em>{{ num_unfinished }} of {{ num_total }}</em> Unfinished</a><span style="width:{{ ratio_unfinished }}%">{{ ratio_unfinished }}%</span></li>
-    <li class="wip"><a title="Goals in progress make up {{ ratio_wip }}%"><em>{{ num_wip }} of {{ num_total }}</em> In progress</a><span style="width:{{ ratio_wip }}%">{{ ratio_wip }}</span></li>
-    <li class="achieved"><a title="Achieved goals make up {{ ratio_achieved }}%"><em>{{ num_achieved }} of {{ num_total }}</em> Achieved</a><span style="width:{{ ratio_achieved }}%">{{ ratio_achieved }}</span></li>
-    <li class="failed"><a title="Failed goals make up {{ ratio_failed }}%"><em>{{ num_failed }} of {{ num_total }}</em> Failed</a><span style="width:{{ ratio_failed }}%">{{ ratio_failed }}</span></li>
-</ul>
+        <li class="unfinished"><a title="Unfinished goals make up {{ ratio_unfinished }}%"><em>{{ num_unfinished }} of {{ num_total }}</em> Unfinished</a><span style="width:{{ ratio_unfinished }}%">{{ ratio_unfinished }}%</span></li>
+        <li class="wip"><a title="Goals in progress make up {{ ratio_wip }}%"><em>{{ num_wip }} of {{ num_total }}</em> In progress</a><span style="width:{{ ratio_wip }}%">{{ ratio_wip }}</span></li>
+        <li class="achieved"><a title="Achieved goals make up {{ ratio_achieved }}%"><em>{{ num_achieved }} of {{ num_total }}</em> Achieved</a><span style="width:{{ ratio_achieved }}%">{{ ratio_achieved }}</span></li>
+        <li class="failed"><a title="Failed goals make up {{ ratio_failed }}%"><em>{{ num_failed }} of {{ num_total }}</em> Failed</a><span style="width:{{ ratio_failed }}%">{{ ratio_failed }}</span></li>
+    </ul>
+</section>
 ```
 
 If you look at the screenshot, you can see that we start with a display for the time in office, so let’s poke through that first:
 
 ```liquid
-    {% capture now %}{{ site.time | date:"%s" }}{% endcapture %}
-    {% capture tenure_start %}{{ info.tenure.start | date:"%s" }}{% endcapture %}
-    {% capture tenure_end %}{{ info.tenure.end | date:"%s" }}{% endcapture %}
-{% if tenure_start > now %}
-    {% assign tenure_served = 0 %}
-    {% assign ratio_tenure = 0 %}
+<section class="six columns" role="region">
+    <ul id="goal-overview" class="u-max-full-width">
+        {% capture now %}{{ site.time | date:"%s" }}{% endcapture %}
+{% if tenure.start != "" and tenure.end != "" %}
+        {% capture tenure_start %}{{ tenure.start | date:"%s" }}{% endcapture %}
+        {% capture tenure_end %}{{ tenure.end | date:"%s" }}{% endcapture %}
+        {% capture tenure_served %}{{ now | minus:tenure_start | divided_by:86400 }}{% endcapture %}
+        {% capture tenure_ending %}{{ tenure_end | minus:tenure_start | divided_by:86400 }}{% endcapture %}
+    {% if tenure_start > now %}
+        {% assign ratio_tenure = 0 %}
+    {% else %}
+        {% capture ratio_tenure %}{{ tenure_served | times:100.0 | divided_by:tenure_ending | round }}{% endcapture %}
+    {% endif %}
+        <li class="tenure"><a title="{{ ratio_tenure }}% of the tenure ending {{ tenure.end }} has been served"><em>{{ tenure_served }} of {{ tenure_ending }} days</em> Days in office</a><span style="width:{{ ratio_tenure }}%">{{ ratio_tenure }}%</span></li>
 {% else %}
-    {% assign time_divisor = 86400 %}
-    {% capture tenure_served %}{{ now | minus:tenure_start | divided_by:time_divisor }}{% endcapture %}
-    {% capture tenure_ending %}{{ tenure_end | minus:tenure_start | divided_by:time_divisor }}{% endcapture %}
-    {% capture ratio_tenure %}{{ tenure_served | times:100.0 | divided_by:tenure_ending | round }}{% endcapture %}
+    {% if tenure.end == "" %}
+        {% capture tenure_start %}{{ tenure.start | date:"%s" }}{% endcapture %}
+        {% capture tenure_served %}{{ now | minus:tenure_start | divided_by:86400 }}{% endcapture %}
+    {% else %}
+        {% assign tenure_served = "?" %}
+    {% endif %}
+        <li class="tenure"><a><em>{{ tenure_served }} of ? days</em> Days in office</a><span style="width:0%">0%</span></li>
 {% endif %}
-    <li class="tenure"><a title="{{ ratio_tenure }}% of the tenure ending {{ info.tenure.end }} has been served"><em>{{ tenure_served }} of {{ tenure_ending }} days</em> Days in office</a><span style="width:{{ ratio_tenure }}%">{{ ratio_tenure }}%</span></li>
+    </ul>
+</section>
 ```
 
 I’ll be brief on this section for now, as it’s still in a very early state.
