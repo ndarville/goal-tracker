@@ -38,14 +38,11 @@
     <title>{% if page.title %}{{ page.title }}{% else %}{{ site.title }}{% endif %}</title>
     <meta name="description" content="{{ site.description }}" />
     <meta name="og:description" content="{{ site.description }}" />
-
     <meta name="viewport" content="width=device-width, initial-scale=1" />
-
 <!--
     <link rel="shortcut icon" href="{{ site.baseurl }}favicon.ico" />
 -->
     <link rel="canonical" href="{{ page.url }}" />
-
 {% if site.minify == true %}
     <link rel="stylesheet" type="text/css" href="{{ site.baseurl }}static/css/normalize+skeleton.min.css" media="all" />
     <link rel="stylesheet" type="text/css" href="{{ site.baseurl }}static/css/style.css" media="all" />
@@ -54,9 +51,6 @@
     <link rel="stylesheet" type="text/css" href="{{ site.baseurl }}static/css/skeleton.css" media="all" />
     <link rel="stylesheet" type="text/css" href="{{ site.baseurl }}static/css/style.css" media="all" />
 {% endif %}
-<!--
-    <link rel="stylesheet" href="{{ site.baseurl }}static/css/custom.css" />
--->
     <link rel="stylesheet" type="text/css" href="{{ site.baseurl }}static/typefaces/css/fonts.css" media="deferred" onload="if(media!='all')media='all'" />
     <noscript><link rel="stylesheet" type="text/css" href="{{ site.baseurl }}static/typefaces/css/fonts.css" media="all" /></noscript>
 
