@@ -84,30 +84,32 @@
             </section>
         </div>
 
-        <section role="region">
-        {% for topic in site.topics %}
-            <h2>{{ topic }}</h2>
+        <div class="row">
+            <section class="twelve columns" role="region">
+            {% for topic in site.topics %}
+                <h2>{{ topic }}</h2>
 
-            <table id="goal-table" class="u-full-width">
-                <thead>
-                    <tr>
-                        <th>Goal</th>
-                        <th>Status</th>
-                    </tr>
-                </thead>
-                <tbody>
-            {% for type in site.goal_types %}
-                {% for goal in goals[type] %}{% if goal.topic == topic %}
-                    <tr class="{{ type }}">
-                        <td>{{ goal.short }}</td>
-                        <td>{{ type }}</td>
-                    </tr>
-                {% endif %}{% endfor %}
+                <table class="goal-table u-full-width">
+                    <thead>
+                        <tr>
+                            <th>Goal</th>
+                            <th>Status</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                {% for type in site.goal_types %}
+                    {% for goal in goals[type] %}{% if goal.topic == topic %}
+                        <tr class="{{ type }}">
+                            <td>{{ goal.short }}</td>
+                            <td>{{ type }}</td>
+                        </tr>
+                    {% endif %}{% endfor %}
+                {% endfor %}
+                    </tbody>
+                </table>
             {% endfor %}
-                </tbody>
-            </table>
-        {% endfor %}
-        </section>
+            </section>
+        </div>
     </main>
 
     <script type="text/javascript" src="{{ site.baseurl }}static/js/fontfaceobserver.js"></script>
