@@ -369,8 +369,8 @@ This concludes the code for the Goal Overview; onto the Goal Table.
         <table id="goal-table" class="u-full-width">
             <thead>
                 <tr>
-                    <th>Goal</th>
-                    <th>Status</th>
+                    <th scope="col">Goal</th>
+                    <th scope="col">Status</th>
                 </tr>
             </thead>
             <tbody>
