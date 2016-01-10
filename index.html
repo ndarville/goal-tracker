@@ -123,6 +123,13 @@
             {% endfor %}
             </section>
         </div>
+
+        <div class="row" style="display: none">
+            <footer role="contentinfo">
+                <p>Last updated <strong>{{ site.time | date: "%B %-d, %Y" }}</strong>. The &ldquo;Days in office&rdquo; counter only updates, when the site does.</p>
+                <p>This site was created with <a href="https://github.com/ndarville/goal-tracker/tree/gh-pages">Goal Tracker</a>.</p>
+            </footer>
+        </div>
     </main>
 
     <script type="text/javascript" src="{{ site.baseurl }}static/js/fontfaceobserver.js"></script>
@@ -139,6 +146,5 @@
                 document.documentElement.className += "fonts-loaded";
             });
     </script>
-    <!-- Last update was {{ site.time | date: "%B %-d, %Y" }}. -->
 </body>
 </html>
