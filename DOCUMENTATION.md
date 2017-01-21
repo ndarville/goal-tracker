@@ -2,49 +2,92 @@ Documentation
 =============
 There are a total of three places you need to configure, in that order:
 
-1. `_ data/goals/`
+1. `_ data/goals.yml`
     - and `_data/info.yml`, which is experimental and only contains term information
-2. `_config.yml`
-3. `index.html`
+3. `_config.yml`
+4. `index.html`
 
 In that order.
 
-### `_data/goals/` ###
+### `_data/goals.yml` ###
 
-The project contains these 4 goal datafiles by default:
+This file is divided into four goal types:
 
-1. `achieved.yml`
-2. `failed.yml`
-3. `unfinished.yml`
-4. `wip.yml`
+1. achieved
+2. failed
+3. unfinished
+4. wip
 
 *Remember these four goal( type)s, because they have to match across the aforementioned three places.* If you wish for them to go buy another name, you might as well start renaming them from this point on in the guide.
 
-Here is what `achieved.yml` looks like:
+Here is what `goals.yml` looks like:
 
 ```yaml
-- short: Mandatory MP declaration of income sources
-  long: bar
-  topic: Government
+achieved:
+    - short: Mandatory MP declaration of income sources
+      long: bar
+      topic: Government
 
-- short: Fixed election terms
-  long: bar
-  topic: Government
+    - short: Fixed election terms
+      long: bar
+      topic: Government
 
-- short: 60% election turnout
-  long: bar
-  topic: Government
+    - short: 60% election turnout
+      long: bar
+      topic: Government
+failed:
+    - short: Retrofit trucks with particle filters
+      long: bar
+      topic: Environment
+
+    - short: Chart groundwater pollution
+      long: bar
+      topic: Environment
+
+    - short: Freedom to criticize government and politicians
+      long: bar
+      topic: Civil Liberties
+unfinished:
+    - short: Lower pollution levels
+      long: bar
+      topic: Environment
+
+    - short: Automatic voter registration
+      long: bar
+      topic: Government
+
+    - short: Make it legal to wear sandals with socks
+      long: bar
+      topic: Civil Liberties
+
+    - short: Ban Bisphenol A
+      long: bar
+      topic: Environment
+
+    - short: Legalize same-sex marriage
+      long: bar
+      topic: Civil Liberties
+
+    - short: Fluoridate water (0.7 g/L)
+      long: bar
+      topic: Environment
+wip:
+    - short: Transparent pollution data
+      long: bar
+      topic: Environment
 ```
 
-`achieved.yml` is a so-called `YAML` file, the simplest and most accessible data format (compared to formats like CSV, TSV, JSON).
+`goals.yml` is a so-called `YAML` file, the simplest and most accessible data format (compared to formats like CSV, TSV, JSON).
 
-In each YAML file is a list of goals with the three values:
+Entry file is a list of goals with three fields:
 
 1. `short`: A short description of the goal, which is displayed on the site.
 2. `long`: A longer description of the goal, which is currently not being used.
 3. `topic`: The type of topic the goal belongs in. Because the word “category” is a reserved keyword in Jekyll, you have to user another term; hence “topic”.
 
-To access and parse a datafile like `achieved.yml` in your Jekyll template, such as `index.html`, you write the following using the Liquid template:
+You will notice that each file is a list item, denoted by a `-` on the first line of each item, indented under the item goal type.
+
+To access and parse a datafile like `goals.yml` in your Jekyll template, such as `index.html`, you write the following using the Liquid template:
 
     {{ site.data.goals.achieved }}
 
@@ -129,9 +172,9 @@ This creates two shorthand variables:
 
 The stuff in our `_data/` folder is loaded in Jekyll using `site.data`—and outside the `{% tags %}` as `{{ site.data }}` in Liquid markup, which is the template language of Jekyll.
 
-The `goals/` folder is accessed with `site.data.goals`; YML files like `wip.yml` are accessed with `site.data.goals.wip`. (Notice the lack of extension.) You get the concept by now.
+The `goals.yml` file is accessed with `site.data.goals`; goal types inside like `wip` are accessed with `site.data.goals.wip`. (Notice the lack of extension.) You get the concept by now.
 
-We use the `{% assign %}` tag, because we’re lazy, to create a shorthand variable for the `tenure` group in our `info.yml` file, and one for our `goals/` folder without `site.data`. Again, this is pure laziness, but it makes future code a lot more readable.
+We use the `{% assign %}` tag, because we’re lazy, to create a shorthand variable for the `tenure` group in our `info.yml` file, and one for our `goals.yml` file without `site.data`. Again, this is pure laziness, but it makes future code a lot more readable.
 
 Moving on to the next part of the snippet:
 

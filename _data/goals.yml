@@ -1,0 +1,52 @@
+achieved:
+    - short: Mandatory MP declaration of income sources
+      long: bar
+      topic: Government
+
+    - short: Fixed election terms
+      long: bar
+      topic: Government
+
+    - short: 60% election turnout
+      long: bar
+      topic: Government
+failed:
+    - short: Retrofit trucks with particle filters
+      long: bar
+      topic: Environment
+
+    - short: Chart groundwater pollution
+      long: bar
+      topic: Environment
+
+    - short: Freedom to criticize government and politicians
+      long: bar
+      topic: Civil Liberties
+unfinished:
+    - short: Lower pollution levels
+      long: bar
+      topic: Environment
+
+    - short: Automatic voter registration
+      long: bar
+      topic: Government
+
+    - short: Make it legal to wear sandals with socks
+      long: bar
+      topic: Civil Liberties
+
+    - short: Ban Bisphenol A
+      long: bar
+      topic: Environment
+
+    - short: Legalize same-sex marriage
+      long: bar
+      topic: Civil Liberties
+
+    - short: Fluoridate water (0.7 g/L)
+      long: bar
+      topic: Environment
+wip:
+    - short: Transparent pollution data
+      long: bar
+      topic: Environment
