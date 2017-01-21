@@ -21,6 +21,7 @@ exclude:
     - "*.log"
     - "*.sh"
     - "Gemfile*"
+    - "DOCUMENTATION.md"
     - "README.md"
     - "s3_website.yml"
     - "node_modules/"
